@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css",
-    "start": "npm run build:style && react-scripts start",
+    "start": "npm run build:style && serve -s build",
+    "dev":"npm run build:style && react-scripts start",
     "heroku-postbuild": "npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
