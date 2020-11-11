@@ -1,17 +1,18 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useHistory as history} from 'react-router-dom';
 
 import Home from './Home'
 import Post from './Post'
-import history from './History'
+import Navbar from './Navbar'
+
 
 
 function App() {
   return (
-      <BrowserRouter history={History}>
+      <BrowserRouter history={history}>
       <div>
         <Switch>
-          <Route path="/" component={Home}/>
+          <Route path="/" component={Home} exact/>
           <Route path="/post" component={Post} exact/>
           <Route component={Error}/>
         </Switch>
