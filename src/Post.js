@@ -53,7 +53,7 @@ export default function Post () {
                         <br/>
                         <input className="mt-3 pl-1 outline-none w-full text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" type="text" placeholder="Image URL"></input>
                         <textarea className="border-solid border-2 rounded outline-none mt-3 w-full h-64 border-solid border-b-2 rounded focus:border-gray-600" placeholder="Description of Rental"></textarea>
-                        <button className="p-3 float-right w-32 relative bg-gray-700 rounded text-white ">Submit</button>
+                        <button className="p-3 float-right w-32 focus:outline-none active:bg-gray-600 relative bg-gray-700 rounded  text-white ">Submit</button>
                     </form>
                 </div>
             </div>
