@@ -3,9 +3,6 @@ import { BrowserRouter, Route, Switch, useHistory as history} from 'react-router
 
 import Home from './Home'
 import Post from './Post'
-import Navbar from './Navbar'
-
-
 
 function App() {
   return (
