@@ -1,12 +1,11 @@
 import Axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 
 export default function Post () {
-    const [formValues, changeValues] = useState({})
-    
+    const [formValues, changeValues] = useState({})   
     const onChange = (e) => {
-       changeValues({
+        changeValues({
             ...formValues,
             [e.target.name]:e.target.value
        })
@@ -14,7 +13,12 @@ export default function Post () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("these values: ", formValues)
+        if(!formValues.item || !formValues.category || !formValues.price || !formValues.unit || !formValues.description || !formValues.url){
+            return changeValues({
+                ...formValues, 
+                error:"One or more of the above fields has not been filled out"})
+        }
+        
         Axios.post("/api/post", formValues)
         .then(res => {
             window.location.replace('/')
@@ -30,8 +34,8 @@ export default function Post () {
             <div className="grid grid-cols-1 justify-items-center">
                 <h3 className="mt-20 text-gray-800 font-bold">Lend an Item</h3>
                 <div className="p-3 bg-white mx-4 mt-4 w-11/12 lg:w-9/12 xl:w-1/2 rounded-md">
-                    <form className="relative">
-                        <input type="text" name="item" onChange={onChange}placeholder="Item" className="text-gray-700 pl-1 w-1/2 font-sm outline-none border-solid border-b-2 rounded focus:border-gray-600"></input>
+                    <form className="relative" >
+                        <input type="text" name="item" maxLength="100" onChange={onChange} required placeholder="Item" value={formValues.item} className="text-gray-700 pl-1 w-1/2 font-sm outline-none border-solid border-b-2 rounded focus:border-gray-600"></input>
                         <select name="category" onChange={onChange} className="flex mt-3 font-sm -ml-1 text-gray-700 outline-none" placeholder="Category">
                             <option value="" className="text-gray-500" selected disabled hidden>Category</option>
                             <option value="general">General</option>
@@ -64,19 +68,21 @@ export default function Post () {
                             <option value="videogames">Video Games/Consoles</option>
                         </select>
                         <label className="mt-3">$ </label>
-                        <input name="price" onChange={onChange} className="mt-3 pl-1 -ml-1 outline-none w-16 text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" type="text" placeholder="Price"></input><span className="text-gray-700">/</span>
+                        <input name="price" type="number" onChange={onChange} maxLength="9" className="mt-3 pl-1 -ml-1 outline-none w-16 text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" placeholder="Price"></input><span className="text-gray-700">  /</span>
                             <select name="unit" onChange={onChange} className="text-gray-700">
-                                <option value="" selected disabled hidden>Unit</option>
+                                <option value="" selected disabled hidden>select unit</option>
                                 <option value="day">day</option>
                                 <option value="week">week</option>
                                 <option value="hour">hour</option>
                                 <option value="use">use</option>
                                 <option value="month">month</option>
                             </select>
+                        {/* <span>{formValues.price.match(/[]/)}</span> */}
                         <br/>
                         <input name="url" onChange={onChange} className="mt-3 pl-1 outline-none w-full text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" type="text" placeholder="Image URL"></input>
                         <textarea name="description" onChange={onChange} className="border-solid border-2 rounded outline-none mt-3 w-full h-64 border-solid border-b-2 rounded focus:border-gray-600" placeholder="Description of Rental"></textarea>
-                        <button onClick={handleSubmit} className="p-3 float-right w-32 focus:outline-none active:bg-gray-600 relative bg-gray-700 rounded  text-white ">Submit</button>
+                            {formValues.error ? <span className="text-red-800 font-light text-sm">*{formValues.error}</span> : null}
+                        <input type="submit" onClick={handleSubmit} className="p-3 float-right w-32 focus:outline-none active:bg-gray-600 relative bg-gray-700 rounded  text-white "/>
                     </form>
                 </div>
             </div>
