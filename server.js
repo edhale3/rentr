@@ -3,6 +3,7 @@ const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 6001
 let bodyParser = require('body-parser');
+let path = require('path')
 
 const db = require('knex')({
     client:'pg',
