@@ -8,6 +8,7 @@ create table if not exists posts (
     image_url varchar(200) not null,
     category varchar(100) not null,
     unit_of_rental varchar(100) not null,
+    date_of_post timestamp with time zone,
     PRIMARY KEY(posts_id)
 )
 
