@@ -54,8 +54,10 @@ export default function Home (props){
             )
         })
     }
+
+    loadScript()
     
-    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), {
+    const autocomplete = new window.google.maps.places.Autocomplete(document.getElementById('autocomplete'), {
         types: ['(cities)'],
         componentRestrictions: {country: "us"}
     })
