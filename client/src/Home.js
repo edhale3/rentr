@@ -85,7 +85,7 @@ export default function Home (props){
             <div className="flex">
                 <div onChange={onChange} className="hidden sm:block w-0 text-sm sm:w-3/12 lg:w-1/6 p-2 -mt-1 bg-orange-100 h-full rounded overflow-hidden">
                     <label className="text-gray-700 text-sm ml-1">Price</label><br/>
-                    <input name="price" type="range" min=" " className="bg-black ml-1 ui-range-slider" />
+                    <input name="price" type="range" className="bg-black ml-1 ui-range-slider" />
                     <br/>
                     <label className="text-gray-700 ml-1 my-2">Unit</label><br/>
                     <select name="unit" className="text-gray-700 my-2">
