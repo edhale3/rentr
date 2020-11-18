@@ -4,6 +4,27 @@ import Navbar from './Navbar'
 
 export default function Post () {
     const [formValues, changeValues] = useState({})   
+
+    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('city_location'), {
+        types: ['(cities)'],
+        componentRestrictions: {country: "us"}
+    })
+    autocomplete.addListener("place_changed", handlePlaceSelect)
+
+    function handlePlaceSelect() {
+        let addressObject = autocomplete.getPlace()
+        console.log("form values: ", formValues)
+        changeValues({
+            ...formValues,
+            city_location: addressObject.address_components[0].long_name,
+            state_location: addressObject.address_components[2].long_name,
+            lat:addressObject.geometry.location.lat(),
+            lng:addressObject.geometry.location.lng()
+        })
+        console.log(addressObject)
+      }
+
+    
     const onChange = (e) => {
         changeValues({
             ...formValues,
@@ -27,6 +48,8 @@ export default function Post () {
             throw err
         })
     }
+
+
 
     return (
         <div className="bg-gray-300 h-screen bg-fixed overflow-auto">
@@ -79,6 +102,7 @@ export default function Post () {
                             </select>
                         {/* <span>{formValues.price.match(/[]/)}</span> */}
                         <br/>
+                        <input id="city_location" onChange={onChange} name="city_location" className="mt-3 pl-1 outline-none w-full text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" type="text" placeholder="Location"></input>
                         <input name="url" onChange={onChange} className="mt-3 pl-1 outline-none w-full text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" type="text" placeholder="Image URL"></input>
                         <textarea name="description" onChange={onChange} className="border-solid border-2 rounded outline-none mt-3 w-full h-64 border-solid border-b-2 rounded focus:border-gray-600" placeholder="Description of Rental"></textarea>
                             {formValues.error ? <span className="text-red-800 font-light text-sm">*{formValues.error}</span> : null}
