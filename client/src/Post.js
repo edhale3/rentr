@@ -91,7 +91,7 @@ export default function Post () {
                             <option value="videogames">Video Games/Consoles</option>
                         </select>
                         <label className="mt-3">$ </label>
-                        <input name="price" type="number" onChange={onChange} maxLength="9" className="mt-3 pl-1 -ml-1 outline-none w-16 text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" placeholder="Price"></input><span className="text-gray-700">  /</span>
+                        <input name="price" type="number" onChange={onChange} maxLength="9" min="1" max="100000" className="mt-3 pl-1 -ml-1 outline-none w-16 text-gray-700 border-solid border-b-2 rounded focus:border-gray-600" placeholder="Price"></input><span className="text-gray-700">  /</span>
                             <select name="unit" onChange={onChange} className="text-gray-700">
                                 <option value="" selected disabled hidden>select unit</option>
                                 <option value="day">day</option>

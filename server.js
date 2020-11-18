@@ -73,14 +73,15 @@ app.get('/api/posts', async (req, res) => {
         let maxLngWest = await parseFloat(filters.lng) - (filters.radius/(111.32*Math.cos((parseFloat(filters.lat) * Math.PI)/180) * .621371))
         let maxLatNorth = await parseFloat(filters.lat) + (filters.radius * 0.01449275)
         let maxLatSouth = await parseFloat(filters.lat) - (filters.radius * 0.01449275)
-        await console.log(maxLngEast)
+        await console.log(filters)
         const records = await db('posts')
             .select()
             .where(function(){
-                this.where('unit_of_rental',`${filters.unit}`)
-                .orWhere(function(){
+                if(filters.unit){
+                    this.where('unit_of_rental',`${filters.unit}`)
+                } else {
                     this.whereNot('unit_of_rental','none')
-                })
+                }
             })
             .andWhere('longitude','>',`${filters.lng !== undefined? maxLngWest : -180}`)
             .andWhere('longitude','<',`${filters.lng !== undefined? maxLngEast : 180}`)
