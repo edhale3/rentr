@@ -102,7 +102,7 @@ export default function Home (props){
                     <input id="autocomplete" name="city_filter" type="search" className="bg-gray-200 rounded p-1 my-2 mr-2 w-full outline-none" placeholder="location..." />
                     <label className="text-gray-700 ml-1">Radius</label><br/>
                     <select name="radius" className="text-gray-700 my-2">
-                        <option selected hidden disabled>All</option>
+                        <option selected disabled>Select Radius</option>
                         <option value={15} >15 Miles</option>
                         <option value={25} >25 Miles</option>
                         <option value={50} >50 Miles</option>
