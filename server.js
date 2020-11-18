@@ -20,6 +20,7 @@ app.use(bodyParser.json())
 app.get('/api/posts', async (req, res) => {
     const db = await deps.db
     const filters =  await req.query
+    await console.log(filters)
     if(Object.keys(filters).length !== 0){
         let locationToggle = false;
         let maxLngEast, maxLngWest, maxLatNorth, maxLatSouth
@@ -32,7 +33,9 @@ app.get('/api/posts', async (req, res) => {
         }
         const records = await db('posts').select()
             .where(function(){
-                filters.unit ? this.where('unit_of_rental',`${filters.unit}`) : this.whereNot('unit_of_rental','none')
+                filters.unit !== "all" && filters.unit !== undefined ? 
+                this.where('unit_of_rental',`${filters.unit}`) : 
+                this.whereNot('unit_of_rental','none')
             })
             .andWhere('longitude','>',`${locationToggle? maxLngWest : -180}`)
             .andWhere('longitude','<',`${locationToggle? maxLngEast : 180}`)
