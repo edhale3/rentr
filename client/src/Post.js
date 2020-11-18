@@ -5,7 +5,7 @@ import Navbar from './Navbar'
 export default function Post () {
     const [formValues, changeValues] = useState({})   
 
-    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('city_location'), {
+    const autocomplete = new window.google.maps.places.Autocomplete(document.getElementById('city_location'), {
         types: ['(cities)'],
         componentRestrictions: {country: "us"}
     })
