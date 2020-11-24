@@ -23,7 +23,9 @@ app.get('/api/posts', async (req, res) => {
     await console.log(filters)
     if(Object.keys(filters).length !== 0){
         let locationToggle = false;
+        //declare max value variables
         let maxLngEast, maxLngWest, maxLatNorth, maxLatSouth
+        //make sure there is a radius/longitude/and latitude before toggling the location filter
         if(filters.radius && filters.lng && filters.lat){
             maxLngEast = parseFloat(filters.lng) + (filters.radius/(111.32*Math.cos((parseFloat(filters.lat) * Math.PI)/180) * .621371))
             maxLngWest = parseFloat(filters.lng) - (filters.radius/(111.32*Math.cos((parseFloat(filters.lat) * Math.PI)/180) * .621371))
@@ -31,12 +33,15 @@ app.get('/api/posts', async (req, res) => {
             maxLatSouth = parseFloat(filters.lat) - (filters.radius * 0.01449275)
             locationToggle = true
         }
+        //query
         const records = await db('posts').select()
             .where(function(){
+                //if filters.unit is not all and is not undefined get unit_of_rental where filters.unit, otherwise get all units
                 filters.unit !== "all" && filters.unit !== undefined ? 
                 this.where('unit_of_rental',`${filters.unit}`) : 
                 this.whereNot('unit_of_rental','none')
             })
+            //create the 'radius' if location toggle exists. otherwise all items can be returned.
             .andWhere('longitude','>',`${locationToggle? maxLngWest : -180}`)
             .andWhere('longitude','<',`${locationToggle? maxLngEast : 180}`)
             .andWhere('latitude','<',`${locationToggle? maxLatNorth : 90}`)
